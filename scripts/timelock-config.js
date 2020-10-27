@@ -65,11 +65,12 @@ module.exports = {
     },
 
     setAllocPoint: {
-        pid: '22',
+        pid: '1',
         allocPoint: '1000',
+        sig : 'set(uint256,uint256,bool)'
     },
 
     // sender : keys.address.bob,
     delay: 3, // in minutes, 3 min
-    etaNumber: 1603716580,
+    etaNumber: 1603776588,
 };

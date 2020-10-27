@@ -7,7 +7,6 @@
     "@openzeppelin/contracts": "^3.1.0",
     "@openzeppelin/test-helpers": "^0.5.6",
     "readline-sync": "^1.4.10",
-    "test-sashimivault": "^1.0.2",
     "truffle": "^5.1.41",
     "truffle-flattener": "^1.4.4",
     "truffle-hdwallet-provider": "^1.0.17",

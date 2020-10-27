@@ -1,3 +1,5 @@
+const helper = require('./helper');
+const time_lock_config = require('./timelock-config');
 const Timelock = artifacts.require('Timelock');
 const config = require('../truffle-config');
 const timeLock_config = require('./timelock-config');
@@ -248,49 +250,6 @@ const readlineSync = require('readline-sync');
 // }
 //
 //
-// async function transferOwnershipQueueTransaction(sender) {
-//     console.log('transferOwnership-Queue-Transaction..');
-//
-//     let lastest = await latestBlockTIme();
-//     console.log('latest: ', lastest.toString());
-//     let eta = lastest.add(time.duration.minutes(config.delay));
-//     console.log('eta: ', eta.toString())
-//
-//     let newOwner = config.transferOwnership.newOwner;
-//     let params = encodeParameters(['address'], [newOwner]);
-//     console.log('params', params.toString())
-//     await this.timelock.queueTransaction(
-//         config.transferOwnership.contract, '0', 'transferOwnership(address)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
-//
-// async function transferOwnershipExecuteTransaction(sender) {
-//     console.log('transferOwnership-Execute-Transaction..');
-//     let eta = new web3.utils.BN(config.etaNumber);
-//     console.log('eta: ', eta.toString())
-//
-//     let newOwner = config.transferOwnership.newOwner;
-//     let params = encodeParameters(['address'], [newOwner]);
-//
-//     console.log('params', params.toString())
-//     await this.timelock.executeTransaction(
-//         config.transferOwnership.contract, '0', 'transferOwnership(address)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
 //
 // async function addPoolQueueTransaction(sender) {
 //     console.log('addPoolQueueTransaction..');
@@ -340,74 +299,7 @@ const readlineSync = require('readline-sync');
 //     });
 // }
 //
-// async function setPointQueueTransaction(sender) {
-//     console.log('setPointQueueTransaction..');
-//
-//     let lastest = await latestBlockTIme();
-//     console.log('latest: ', lastest.toString());
-//     let eta = lastest.add(time.duration.minutes(config.delay));
-//     console.log('eta: ', eta.toString())
-//
-//     let pid = config.setAllocPoint.pid;
-//     let allocPoint = config.setAllocPoint.allocPoint
-//     let params = encodeParameters(['uint256', 'uint256', 'bool'], [pid, allocPoint, false]);
-//     console.log('params', params.toString())
-//     await this.timelock.queueTransaction(
-//         this.chef.address, '0', 'set(uint256,uint256,bool)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
-//
-//
-// async function setPointExecuteTransaction(sender) {
-//     console.log('setPointExecuteTransaction..');
-//
-//     let pid = config.setAllocPoint.pid;
-//     let allocPoint = config.setAllocPoint.allocPoint
-//     let eta = new web3.utils.BN(config.etaNumber);
-//     console.log('eta: ', eta.toString())
-//
-//     let params = encodeParameters(['uint256', 'uint256', 'bool'], [pid, allocPoint, false]);
-//     console.log('params', params.toString())
-//     await this.timelock.executeTransaction(
-//         this.chef.address, '0', 'set(uint256,uint256,bool)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
-//
-// async function setPointCancelTransaction(sender) {
-//     console.log('setPointCancelTransaction..');
-//
-//     let pid = config.setAllocPoint.pid;
-//     let allocPoint = config.setAllocPoint.allocPoint
-//     let eta = new web3.utils.BN(config.etaNumber);
-//     console.log('eta: ', eta.toString())
-//
-//     let params = encodeParameters(['uint256', 'uint256', 'bool'], [pid, allocPoint, false]);
-//     console.log('params', params.toString())
-//     await this.timelock.cancelTransaction(
-//         this.chef.address, '0', 'set(uint256,uint256,bool)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
+
 
 async function queueTimeLock(context, sender) {
     console.log('Sending queue tx..');
@@ -437,14 +329,47 @@ async function executeTimeLock(context, sender) {
     });
 }
 
+async function cancelTimeLock(context, sender) {
+    console.log('Sending cancel tx..');
+    await this.timelock.cancelTransaction(
+        context.target, '0', context.sig,
+        context.params,
+        context.eta,
+        {from: sender}
+    ).then(function (t) {
+        console.log("Transaction - :", t)
+    }).catch(function (e) {
+        console.log(e);
+    });
+}
+
 async function useKovanProvider() {
     this.timelock = await Timelock.at(contracts.kovan.timeLock);
-    return web3 = providers.useKovanProvider();
+    return providers.useKovanProvider();
 }
 
 async function useMainnetProvider() {
     this.timelock = await Timelock.at(contracts.mainnet.timeLock);
     return providers.useMainnetProvider();
+}
+
+async function queue(web3, method) {
+    let lastest = await helper.latestBlockTIme(web3);
+    let eta = lastest.add(helper.duration(time_lock_config.delay));
+    let context = method.generate(eta);
+    console.log(context);
+}
+
+async function execute(web3, method) {
+    let eta = new web3.utils.BN(time_lock_config.etaNumber);
+    let context = method.generate(eta);
+    console.log(context);
+}
+
+async function cancel(web3, method) {
+    let eta = new web3.utils.BN(time_lock_config.etaNumber);
+    let context = method.generate(eta);
+    console.log(context);
 }
 
 module.exports = async function () {
@@ -475,11 +400,14 @@ module.exports = async function () {
 
     let type = argv['type'];
     if (type === timeLock_config.txTypes.queueTransaction) {
-        let context = await timeLockMethod.queue(web3);
+        let context = await queue(web3, timeLockMethod);
         await queueTimeLock(context, config.sender);
     } else if (type === timeLock_config.txTypes.executeTransaction) {
-        let context = await timeLockMethod.execute(web3);
+        let context = await execute(web3, timeLockMethod);
         await executeTimeLock(context, config.sender);
+    }   else if (type === timeLock_config.txTypes.cancelTransaction) {
+        let context = await cancel(web3, timeLockMethod);
+        await cancelTimeLock(context, config.sender);
     }
 
     console.log('End.');

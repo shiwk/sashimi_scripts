@@ -1,4 +1,4 @@
-const helper = require('./helper');
+const helper = require('../helper');
 const time_lock_config = require('./timelock-config');
 
 async function generate(eta) {
@@ -11,16 +11,16 @@ async function generate(eta) {
     return generateByAction(eta, action);
 }
 
-async function generateByAction(eta, action) {
+async function generateByAction(action) {
     console.log('transferOwnership');
     let params = helper.encodeParameters(['address'], [action.newOwner]);
-    console.log('eta:', eta.toString());
+    console.log('eta:', action.eta.toString());
 
     return {
         'target': action.contract,
         'sig': action.sig,
         'params': params,
-        'eta': eta
+        'eta': action.eta
     }
 }
 

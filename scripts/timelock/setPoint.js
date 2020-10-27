@@ -1,4 +1,4 @@
-const helper = require('./helper');
+const helper = require('../helper');
 const time_lock_config = require('./timelock-config');
 const contracts = require('./contracts-config');
 

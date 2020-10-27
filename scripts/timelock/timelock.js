@@ -1,4 +1,4 @@
-const helper = require('./helper');
+const helper = require('../helper');
 const contracts = require('./contracts-config');
 const providers = require('../../providers');
 const time_lock_config = require('./timelock-config');
@@ -22,8 +22,8 @@ async function queue(web3, method) {
     return context;
 }
 
-async function queueByAction(web3, method, eta, action) {
-    let context = await method.generateByAction(eta, action);
+async function queueByAction(web3, method, action) {
+    let context = await method.generateByAction(action);
     console.log(context);
     return context;
 }
@@ -31,6 +31,12 @@ async function queueByAction(web3, method, eta, action) {
 async function executeContext(web3, method, eta) {
     eta = typeof eta === 'undefined' ? new web3.utils.BN(time_lock_config.etaNumber) : eta;
     let context = await method.generate(eta);
+    console.log(context);
+    return context;
+}
+
+async function executeContextByAction(web3, method, action) {
+    let context = await method.generateByAction(action.eta, action);
     console.log(context);
     return context;
 }
@@ -89,6 +95,7 @@ module.exports = {
     queueContext: queue,
     queueContextByAction: queueByAction,
     executeContext: executeContext,
+    executeContextByAction: executeContextByAction,
     cancelContext: cancelContext,
 
     queueTimeLock: queueTimeLock,

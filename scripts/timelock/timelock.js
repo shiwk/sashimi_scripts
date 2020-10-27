@@ -1,6 +1,6 @@
 const helper = require('./helper');
 const contracts = require('./contracts-config');
-const providers = require('../providers');
+const providers = require('../../providers');
 const time_lock_config = require('./timelock-config');
 
 async function useKovanProvider(timelockContract) {

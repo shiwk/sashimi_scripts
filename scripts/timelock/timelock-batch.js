@@ -1,6 +1,6 @@
 const Timelock = artifacts.require('Timelock');
 const timelock = require('./timelock');
-const config = require('../truffle-config');
+const config = require('../../truffle-config');
 const time_lock_config = require('./timelock-config');
 const time_lock_methods = require('./timelock-methods');
 const argv = require('minimist')(process.argv.slice(2), {string: ['network']});

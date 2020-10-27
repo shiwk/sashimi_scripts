@@ -21,6 +21,6 @@ function duration(delay) {
 
 module.exports ={
     encodeParameters : encodeParameters,
-    latestBlockTIme : latestBlockTIme,
+    latestBlockTime : latestBlockTIme,
     duration : duration
 }

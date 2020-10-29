@@ -1,16 +1,13 @@
 const Timelock = artifacts.require('Timelock');
 const timelock = require('./timelock');
-const config = require('../../truffle-config');
 const time_lock_config = require('./timelock-config');
 const argv = require('minimist')(process.argv.slice(2), {string: ['network']});
 const readlineSync = require('readline-sync');
 const timelockBatchQueue = require('./timelock-batch-queue');
 const timelockBatchExecute = require('./timelock-batch-execute');
-
 module.exports = async function () {
     console.log(`network: ${argv['network']}\n`
-        + `time lock type: ${argv['type']}\n`
-        + `sender: ${config.sender}`);
+        + `time lock type: ${argv['type']}\n`);
 
     if (readlineSync.keyInYN('Are you sure?')) {
         // 'Y' key was pressed.
@@ -31,11 +28,12 @@ module.exports = async function () {
 
     let type = argv['type'];
     if (type === time_lock_config.txTypes.queueTransaction) {
-        await timelockBatchQueue(web3, config.sender);
+        await timelockBatchQueue(web3);
     } else if (type === time_lock_config.txTypes.executeTransaction) {
-        await timelockBatchExecute(web3, config.sender, argv['data']);
+        let dataPath = argv['data'];
+        await timelockBatchExecute(web3, dataPath);
     }
-    
+
     console.log('End.');
 }
 

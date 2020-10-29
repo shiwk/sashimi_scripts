@@ -3,21 +3,24 @@ const time_lock_config = require('./timelock-config');
 
 async function generate(eta) {
     let action = {
-        'newOwner' : time_lock_config.transferOwnership.newOwner,
-        'contract' : time_lock_config.transferOwnership.contract,
-        'sig' : time_lock_config.transferOwnership.sig
+        'params' :{
+            'newOwner' : time_lock_config.transferOwnership.newOwner,
+        },
+        'target' : time_lock_config.transferOwnership.contract,
+        'sig' : time_lock_config.transferOwnership.sig,
+        'eta' : eta
     }
 
-    return generateByAction(eta, action);
+    return generateByAction(action);
 }
 
 async function generateByAction(action) {
     console.log('transferOwnership');
-    let params = helper.encodeParameters(['address'], [action.newOwner]);
+    let params = helper.encodeParameters(['address'], [action.params.newOwner]);
     console.log('eta:', action.eta.toString());
 
     return {
-        'target': action.contract,
+        'target': action.target,
         'sig': action.sig,
         'params': params,
         'eta': action.eta

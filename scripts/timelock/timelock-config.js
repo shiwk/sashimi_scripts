@@ -1,13 +1,13 @@
 const keys = require("../../keys");
 
-const setPendingAdminMethod = 'setPendingAdmin'
-const addPoolMethod = 'addPool'
-const setPointMethod = 'setPoint'
-const transferOwnershipMethod = 'transferOwnership'
-const setMigratorMethod = 'setMigratorMethod'
-const setFeeToMethod = 'SetFeeTo'
-const addProviderMethod = 'addProvider'
-const changeReservesRatioMethod = 'changeReservesRatio'
+const setPendingAdmin = 'setPendingAdmin'
+const addPool = 'addPool'
+const setPoint = 'setPoint'
+const transferOwnership = 'transferOwnership'
+const setMigrator = 'setMigrator'
+const setFeeTo = 'setFeeTo'
+const addProvider = 'addProvider'
+const changeReservesRatio = 'changeReservesRatio'
 
 const executeTransaction = 'execute'
 const queueTransaction = 'queue'
@@ -15,14 +15,34 @@ const cancelTransaction = 'cancel'
 
 module.exports = {
     methods: {
-        setPendingAdminMethod,
-        addPoolMethod,
-        setPointMethod,
-        transferOwnershipMethod,
-        setMigratorMethod,
-        setFeeToMethod,
-        addProviderMethod,
-        changeReservesRatioMethod
+        setPendingAdminMethod : {
+            name : setPendingAdmin,
+            sig : ''
+        },
+        addPoolMethod :{
+            name : addPool,
+            sig : 'add(uint256,address,bool)'
+        },
+        setPointMethod : {
+            name : setPoint,
+            sig : 'set(uint256,uint256,bool)'
+        },
+        transferOwnershipMethod :{
+            name :transferOwnership,
+            sig : 'transferOwnership(address)'
+        },
+        setMigratorMethod : {
+            name :setMigrator
+        },
+        setFeeToMethod : {
+            name : setFeeTo
+        },
+        addProviderMethod : {
+            name : addProvider
+        },
+        changeReservesRatioMethod : {
+            changeReservesRatio : changeReservesRatio
+        }
     },
 
     txTypes: {
@@ -38,7 +58,6 @@ module.exports = {
     transferOwnership: {
         newOwner: '0x210ba3E10a59c6BC220B892e5d7A550151dEE2f4',
         contract: '0x8a2407b3ED86B51E713b31bfc6989A7cFaE46B53',
-        sig: 'transferOwnership(address)'
     },
 
     setPendingAdmin: {
@@ -60,14 +79,13 @@ module.exports = {
     },
 
     addPool: {
-        lpAddress: '0x96559937e9c4475160CA040b16cDA93E3EfBD75A',
+        lpToken: '0x96559937e9c4475160CA040b16cDA93E3EfBD75A',
         allocPoint: '500',
     },
 
     setAllocPoint: {
         pid: '1',
         allocPoint: '1000',
-        sig : 'set(uint256,uint256,bool)'
     },
 
     // sender : keys.address.bob,

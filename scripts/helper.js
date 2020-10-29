@@ -1,6 +1,11 @@
 const ethers = require('ethers');
 const {_, time} = require('@openzeppelin/test-helpers');
-var fs = require('fs');
+const fs = require('fs');
+const directory = './data';
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
+
 
 function encodeParameters(types, values) {
     const abi = new ethers.utils.AbiCoder();
@@ -22,7 +27,7 @@ function duration(delay) {
 
 async function writeJson(file, obj) {
     let json = JSON.stringify(obj);
-    fs.writeFile(`./output/${file.toString()}.json`, json, 'utf8', (err) => {
+    fs.writeFile(directory + `/${file}.json`, json, 'utf8', (err) => {
         if (err) {
             throw err;
         }
@@ -31,8 +36,14 @@ async function writeJson(file, obj) {
 }
 
 async function readJson(file) {
-    let data = fs.readFileSync(`./output/${file}.json`, 'utf8');
-    console.log("JSON data load.");
+    let data;
+    await readFile(directory + `/${file}`, 'utf8').then((text) => {
+        console.log("JSON data load.");
+        data = text;
+    }).catch((err) => {
+        console.log('Error', err);
+    });
+
     return JSON.parse(data);
 }
 
@@ -41,5 +52,5 @@ module.exports = {
     latestBlockTime: latestBlockTIme,
     duration: duration,
     writeJson: writeJson,
-    readJson : readJson
+    readJson: readJson
 }

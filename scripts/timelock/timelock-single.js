@@ -245,57 +245,6 @@ const readlineSync = require('readline-sync');
 //         console.log(e);
 //     });
 // }
-//
-//
-//
-// async function addPoolQueueTransaction(sender) {
-//     console.log('addPoolQueueTransaction..');
-//
-//     let lastest = await latestBlockTIme();
-//     console.log('latest: ', lastest.toString());
-//     let eta = lastest.add(time.duration.minutes(config.delay));
-//     console.log('eta: ', eta.toString())
-//
-//     let allocPoint = config.addPool.allocPoint;
-//     let lpToken = config.addPool.lpAddress;
-//
-//     let params = encodeParameters(['uint256', 'address', 'bool'], [allocPoint, lpToken, false]);
-//     console.log('params', params.toString())
-//     await this.timelock.queueTransaction(
-//         this.chef.address, '0', 'add(uint256,address,bool)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
-//
-// async function addPoolExecuteTransaction(sender) {
-//     console.log('addPoolExecuteTransaction..');
-//     let eta = new web3.utils.BN(config.etaNumber);
-//     console.log('eta: ', eta.toString())
-//
-//     let allocPoint = config.addPool.allocPoint;
-//     let lpToken = config.addPool.lpAddress;
-//
-//     let params = encodeParameters(['uint256', 'address', 'bool'], [allocPoint, lpToken, false]);
-//     console.log('params', params.toString())
-//
-//     await this.timelock.executeTransaction(
-//         this.chef.address, '0', 'add(uint256,address,bool)',
-//         params,
-//         eta,
-//         {from: sender}
-//     ).then(function (t) {
-//         console.log("Transaction - :", t)
-//     }).catch(function (e) {
-//         console.log(e);
-//     });
-// }
-//
 
 
 module.exports = async function () {

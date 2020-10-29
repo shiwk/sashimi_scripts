@@ -5,20 +5,20 @@ const contracts = require('./contracts-config');
 async function generate(eta) {
 
     let action = {
-        'target' : contracts.kovan.chef,
-        'sig' : time_lock_config.setAllocPoint.sig,
-        'eta' : eta,
-        'params' : {
-            'pid' : time_lock_config.setAllocPoint.pid,
-            'allocPoint' : time_lock_config.setAllocPoint.allocPoint,
+        'target': contracts.kovan.chef,
+        'sig': time_lock_config.addPool.sig,
+        'eta': eta,
+        'params': {
+            'lpToken': time_lock_config.addPool.lpAddress,
+            'allocPoint': time_lock_config.addPool.allocPoint,
         }
     }
     return generateByAction(action);
 }
 
 async function generateByAction(action) {
-    console.log('setPoint');
-    let params = helper.encodeParameters(['uint256', 'uint256', 'bool'], [action.params.pid, action.params.allocPoint, false]);
+    console.log('addPool');
+    let params = helper.encodeParameters(['uint256', 'address', 'bool'], [action.params.allocPoint, action.params.lpToken, false]);
 
     console.log('eta:', action.eta.toString());
 
@@ -32,5 +32,5 @@ async function generateByAction(action) {
 
 module.exports = {
     generate: generate,
-    generateByAction : generateByAction
+    generateByAction: generateByAction
 }

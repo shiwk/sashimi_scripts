@@ -24,25 +24,19 @@ async function queue(web3, method) {
 
 async function queueByAction(web3, method, action) {
     let context = await method.generateByAction(action);
-    console.log(context);
+    // console.log(context);
     return context;
 }
 
-async function executeContext(web3, method, eta) {
-    eta = typeof eta === 'undefined' ? new web3.utils.BN(time_lock_config.etaNumber) : eta;
+async function executeContext(web3, method) {
+    let eta = new web3.utils.BN(time_lock_config.etaNumber);
     let context = await method.generate(eta);
     console.log(context);
     return context;
 }
 
-async function executeContextByAction(web3, method, action) {
-    let context = await method.generateByAction(action.eta, action);
-    console.log(context);
-    return context;
-}
-
-async function cancelContext(web3, method, eta) {
-    eta = typeof eta === 'undefined' ? new web3.utils.BN(time_lock_config.etaNumber) : eta;
+async function cancelContext(web3, method) {
+    let eta = new web3.utils.BN(time_lock_config.etaNumber);
     let context = await method.generate(eta);
     console.log(context);
     return context;
@@ -56,10 +50,13 @@ async function queueTimeLock(context, sender) {
         context.eta,
         {from: sender}
     ).then(function (t) {
-        console.log("Transaction - :", t)
+        console.log("Transaction %s executed.", t.tx);
     }).catch(function (e) {
         console.log(e);
+        return false;
     });
+
+    return true;
 }
 
 async function executeTimeLock(context, sender) {
@@ -70,10 +67,13 @@ async function executeTimeLock(context, sender) {
         context.eta,
         {from: sender}
     ).then(function (t) {
-        console.log("Transaction - :", t)
+        console.log("Transaction %s executed.", t.tx);
     }).catch(function (e) {
         console.log(e);
+        return false;
     });
+
+    return true;
 }
 
 async function cancelTimeLock(context, sender) {
@@ -84,10 +84,12 @@ async function cancelTimeLock(context, sender) {
         context.eta,
         {from: sender}
     ).then(function (t) {
-        console.log("Transaction - :", t)
+        console.log("Transaction %s executed.", t.tx);
     }).catch(function (e) {
         console.log(e);
+        return false;
     });
+    return true;
 }
 
 
@@ -95,7 +97,6 @@ module.exports = {
     queueContext: queue,
     queueContextByAction: queueByAction,
     executeContext: executeContext,
-    executeContextByAction: executeContextByAction,
     cancelContext: cancelContext,
 
     queueTimeLock: queueTimeLock,

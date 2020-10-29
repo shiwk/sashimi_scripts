@@ -6,11 +6,11 @@ async function generate(eta) {
 
     let action = {
         'target': contracts.kovan.chef,
-        'sig': time_lock_config.addPool.sig,
+        'sig': time_lock_config.methods.addPoolMethod.sig,
         'eta': eta,
         'params': {
-            'lpToken': time_lock_config.addPool.lpAddress,
-            'allocPoint': time_lock_config.addPool.allocPoint,
+            'lpToken': time_lock_config.params.addPool.lpToken,
+            'allocPoint': time_lock_config.params.addPool.allocPoint,
         }
     }
     return generateByAction(action);

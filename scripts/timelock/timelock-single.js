@@ -275,14 +275,14 @@ module.exports = async function () {
 
     let type = argv['type'];
     if (type === time_lock_config.txTypes.queueTransaction) {
-        let context = await timelock.queueContext(web3, timeLockMethod);
-        await timelock.queueTimeLock(context, config.sender);
+        let context = await timelock.getQueueContext(web3, timeLockMethod);
+        await timelock.sendQueueTimeLock(context, config.sender);
     } else if (type === time_lock_config.txTypes.executeTransaction) {
-        let context = await timelock.executeContext(web3, timeLockMethod);
-        await timelock.executeTimeLock(context, config.sender);
+        let context = await timelock.getExecuteContext(web3, timeLockMethod);
+        await timelock.sendExecuteTimeLock(context, config.sender);
     } else if (type === time_lock_config.txTypes.cancelTransaction) {
-        let context = await timelock.cancelContext(web3, timeLockMethod);
-        await timelock.cancelTimeLock(context, config.sender);
+        let context = await timelock.getCancelContext(web3, timeLockMethod);
+        await timelock.sendCancelTimeLock(context, config.sender);
     }
 
     console.log('End.');

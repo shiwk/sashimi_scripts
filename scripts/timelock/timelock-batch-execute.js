@@ -9,7 +9,7 @@ module.exports = async function (web3, file) {
         console.log("\naction:", i);
         let action = actions[i];
         console.log(action);
-        let result = await timelock.executeTimeLock(action, data.sender);
+        let result = await timelock.sendExecuteTimeLock(action, data.sender);
         if (!result)
         {
             console.log("Action %d failed.", i);

@@ -22,8 +22,8 @@ module.exports = async function (web3) {
         let timeLockMethod = time_lock_methods.getTimeLockMethod(method);
 
         action.eta = eta;
-        let context = await timelock.queueContextByAction(web3, timeLockMethod, action);
-        let result = await timelock.queueTimeLock(context, sender);
+        let context = await timelock.getQueueContextByAction(web3, timeLockMethod, action);
+        let result = await timelock.sendQueueTimeLock(context, sender);
         if (!result)
         {
             console.log("Action %d failed.", i);

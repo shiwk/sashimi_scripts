@@ -13,36 +13,33 @@ async function useMainnetProvider(timelockContract) {
     return providers.useMainnetProvider();
 }
 
-async function queue(web3, method) {
+async function getQueueContext(web3, method) {
     let lastest = await helper.latestBlockTime(web3);
     let eta = lastest.add(helper.duration(time_lock_config.delay));
-
     let context = await method.generate(eta);
     console.log(context);
     return context;
 }
 
-async function queueByAction(web3, method, action) {
-    let context = await method.generateByAction(action);
-    // console.log(context);
-    return context;
+async function getQueueContextByAction(web3, method, action) {
+    return await method.generateByAction(action);
 }
 
-async function executeContext(web3, method) {
+async function getExecuteContext(web3, method) {
     let eta = new web3.utils.BN(time_lock_config.etaNumber);
     let context = await method.generate(eta);
     console.log(context);
     return context;
 }
 
-async function cancelContext(web3, method) {
+async function getCancelContext(web3, method) {
     let eta = new web3.utils.BN(time_lock_config.etaNumber);
     let context = await method.generate(eta);
     console.log(context);
     return context;
 }
 
-async function queueTimeLock(context, sender) {
+async function sendQueueTimeLock(context, sender) {
     console.log('Sending queue tx..');
     await this.timelock.queueTransaction(
         context.target, '0', context.sig,
@@ -59,7 +56,7 @@ async function queueTimeLock(context, sender) {
     return true;
 }
 
-async function executeTimeLock(context, sender) {
+async function sendExecuteTimeLock(context, sender) {
     console.log('Sending execute tx..');
     await this.timelock.executeTransaction(
         context.target, '0', context.sig,
@@ -76,7 +73,7 @@ async function executeTimeLock(context, sender) {
     return true;
 }
 
-async function cancelTimeLock(context, sender) {
+async function sendCancelTimeLock(context, sender) {
     console.log('Sending cancel tx..');
     await this.timelock.cancelTransaction(
         context.target, '0', context.sig,
@@ -94,14 +91,14 @@ async function cancelTimeLock(context, sender) {
 
 
 module.exports = {
-    queueContext: queue,
-    queueContextByAction: queueByAction,
-    executeContext: executeContext,
-    cancelContext: cancelContext,
+    getQueueContext: getQueueContext,
+    getQueueContextByAction: getQueueContextByAction,
+    getExecuteContext: getExecuteContext,
+    getCancelContext: getCancelContext,
 
-    queueTimeLock: queueTimeLock,
-    executeTimeLock: executeTimeLock,
-    cancelTimeLock: cancelTimeLock,
+    sendQueueTimeLock: sendQueueTimeLock,
+    sendExecuteTimeLock: sendExecuteTimeLock,
+    sendCancelTimeLock: sendCancelTimeLock,
 
     useKovanProvider: useKovanProvider,
     useMainnetProvider: useMainnetProvider

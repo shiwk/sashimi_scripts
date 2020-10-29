@@ -4,10 +4,10 @@ const time_lock_config = require('./timelock-config');
 async function generate(eta) {
     let action = {
         'params' :{
-            'newOwner' : time_lock_config.transferOwnership.newOwner,
+            'newOwner' : time_lock_config.params.transferOwnership.newOwner,
         },
-        'target' : time_lock_config.transferOwnership.contract,
-        'sig' : time_lock_config.transferOwnership.sig,
+        'target' : time_lock_config.params.transferOwnership.contract,
+        'sig' : time_lock_config.methods.transferOwnershipMethod.sig,
         'eta' : eta
     }
 

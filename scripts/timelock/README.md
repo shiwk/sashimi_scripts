@@ -1,5 +1,9 @@
 # Batch Timelock Scripts
 
+## Prerequisite
+
+Specify your timelock `admin` in [timelock-config.js](./timelock-config.js).
+
 ## Queue
 Edit [kovan.js](./batch/kovan.js) or [mainnet.js](./batch/mainnet.js) with data you want before sending `queue` transactions.
 

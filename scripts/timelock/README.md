@@ -1,8 +1,5 @@
 # Batch Timelock Scripts
 
-## Prerequisite
-Create info.json with your private information. Refer [info.json.bak](info.json.bak). 
-
 ## Queue
 Edit [kovan.js](./batch/kovan.js) or [mainnet.js](./batch/mainnet.js) with data you want before sending `queue` transactions.
 

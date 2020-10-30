@@ -19,8 +19,9 @@ module.exports = async function (web3, network) {
         console.log(action);
         let methodName = action.methodName;
         let timeLockMethod = timelock_methods.getMethodGenerator(methodName);
-
+        action.sig = timelock_methods.getMethodSig(methodName);
         action.eta = eta;
+
         let context = await timelock.getQueueContextByAction(web3, timeLockMethod, action);
         let result = await timelock.sendQueueTimeLock(context);
         if (!result)

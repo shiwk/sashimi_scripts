@@ -25,20 +25,6 @@ async function getQueueContextByAction(web3, method, action) {
     }
 }
 
-// async function getExecuteContext(web3, method) {
-//     let eta = new web3.utils.BN(time_lock_config.etaNumber);
-//     let context = await method.generate(eta);
-//     console.log(context);
-//     return context;
-// }
-
-// async function getCancelContext(web3, method) {
-//     let eta = new web3.utils.BN(time_lock_config.etaNumber);
-//     let context = await method.generate(eta);
-//     console.log(context);
-//     return context;
-// }
-
 async function sendQueueTimeLock(context) {
     console.log(`Sending queue tx from sender: ${this.sender} ..`);
     return await this.timelock.queueTransaction(
@@ -89,10 +75,7 @@ async function sendCancelTimeLock(context) {
 
 
 module.exports = {
-    // getQueueContext: getQueueContext,
     getQueueContextByAction: getQueueContextByAction,
-    // getExecuteContext: getExecuteContext,
-    // getCancelContext: getCancelContext,
 
     sendQueueTimeLock: sendQueueTimeLock,
     sendExecuteTimeLock: sendExecuteTimeLock,

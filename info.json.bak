@@ -1,12 +1,16 @@
 {
-  "api_etherscan": "",
-  "mainnet": "",
-  "kovan": "",
+  "api_etherscan": "", //etherscan api_key
+  "mainnet": "", // mainnet network provider
+  "kovan": "", //  kovan network provider
   "keys": [
+    // add your keys
   ],
   "addresses": {
     "alice": "",
+    // add your addresses correspond to your keys
   },
+
+  // contract addresses you need
   "contracts": {
     "kovan": {
       "timeLock": "",

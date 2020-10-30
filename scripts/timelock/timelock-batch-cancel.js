@@ -10,9 +10,8 @@ module.exports = async function (web3, file) {
         console.log("Action:", i);
         let action = actions[i];
         console.log(action);
-        let result = await timelock.sendExecuteTimeLock(action);
-        if (!result)
-        {
+        let result = await timelock.sendCancelTimeLock(action);
+        if (!result) {
             console.log("Action %d failed.", i);
             break;
         }

@@ -2,7 +2,7 @@
 /build/
 
 /.idea
-/data
+/data/*.json
 
 package-lock.json
 yarn.lock

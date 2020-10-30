@@ -11,6 +11,7 @@ module.exports = {
     mainnet: {
         timeLock: info.contracts.mainnet.timeLock,
         chef: info.contracts.mainnet.chef,
-        factory: info.contracts.mainnet.factory
+        factory: info.contracts.mainnet.factory,
+        investment: info.contracts.mainnet.investment,
     }
 }

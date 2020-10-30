@@ -28,7 +28,7 @@ module.exports = async function () {
 
     let type = argv['type'];
     if (type === time_lock_config.txTypes.queueTransaction) {
-        await timelockBatchQueue(web3);
+        await timelockBatchQueue(web3, argv['network']);
     } else if (type === time_lock_config.txTypes.executeTransaction) {
         let dataPath = argv['data'];
         await timelockBatchExecute(web3, dataPath);

@@ -19,7 +19,7 @@ module.exports = {
                 return new HDWalletProvider(keys.privateKeys, providers.kovan, 0, keys.privateKeys.length)
             },
             network_id: 42,
-            gas: 1000000,      //make sure this gas allocation isn't over 4M, which is the max
+            gas: 10000000,
             gasPrice : 10000000000, //10 GWei
             networkCheckTimeout: 10000000
         },
@@ -29,7 +29,7 @@ module.exports = {
                 return new HDWalletProvider(keys.privateKeys, providers.mainnet, 0,keys.privateKeys.length)
             },
             network_id: 1,
-            gas: 200000,      //make sure this gas allocation isn't over 4M, which is the max
+            gas: 200000,
             gasPrice : 160000000000, //160 GWei
         }
     },
@@ -47,8 +47,5 @@ module.exports = {
 
     api_keys: {
         etherscan: info.api_etherscan
-    },
-
-    // sender : keys.address.bob,
-    sender : keys.address.lisa,
+    }
 };

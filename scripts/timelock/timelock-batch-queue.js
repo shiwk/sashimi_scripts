@@ -1,29 +1,28 @@
 const helper = require('../helper');
 const timelock = require('./timelock');
-const time_lock_methods = require('./timelock-methods');
-const batch = require('./batch');
+const timelock_methods = require('./methods/timelock-methods');
 
-module.exports = async function (web3) {
+module.exports = async function (web3, network) {
+    const batch = require(`./batch/${network}.js`);
     let actions = batch.actions;
-    let sender = batch.sender;
     let data ={
         'actions' :[],
-        'sender' : sender
     };
 
     let lastest = await helper.latestBlockTime(web3);
     let eta = lastest.add(helper.duration(batch.delay));
 
     for (let i = 0; i < actions.length; i++) {
-        console.log("\naction:", i);
+        console.log('\n'+'='.repeat(100)+'\n');
+        console.log("Action:", i);
         let action = actions[i];
         console.log(action);
-        let method = action.methodName;
-        let timeLockMethod = time_lock_methods.getTimeLockMethod(method);
+        let methodName = action.methodName;
+        let timeLockMethod = timelock_methods.getMethodGenerator(methodName);
 
         action.eta = eta;
         let context = await timelock.getQueueContextByAction(web3, timeLockMethod, action);
-        let result = await timelock.sendQueueTimeLock(context, sender);
+        let result = await timelock.sendQueueTimeLock(context);
         if (!result)
         {
             console.log("Action %d failed.", i);

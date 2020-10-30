@@ -1,0 +1,30 @@
+{
+  "addPoolMethod": {
+    "name": "masterchef.add",
+    "sig": "add(uint256,address,bool)"
+  },
+  "setPointMethod": {
+    "name": "masterchef.set",
+    "sig": "set(uint256,uint256,bool)"
+  },
+  "transferOwnershipMethod": {
+    "name": "transferOwnership",
+    "sig": "transferOwnership(address)"
+  },
+  "setFeeToMethod": {
+    "name": "swapFactory.setFeeTo",
+    "sig": "setFeeTo(address)"
+  },
+  "addProviderMethod": {
+    "name": "investment.addProvider",
+    "sig": "addProvider(address,address)"
+  },
+  "changeReservesRatioMethod": {
+    "name": "investment.changeReservesRatio",
+    "sig": "changeReservesRatio(address,uint256)"
+  },
+  "addAdmin": {
+    "name": "investment.addAdmin",
+    "sig": "addAdmin(address)"
+  }
+}

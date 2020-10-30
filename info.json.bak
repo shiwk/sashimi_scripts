@@ -1,0 +1,24 @@
+{
+  "api_etherscan": "",
+  "mainnet": "",
+  "kovan": "",
+  "keys": [
+  ],
+  "addresses": {
+    "alice": "",
+  },
+  "contracts": {
+    "kovan": {
+      "timeLock": "",
+      "chef": "",
+      "factory": "",
+      "investment": ""
+    },
+    "mainnet": {
+      "timeLock": "",
+      "chef": "",
+      "factory": "",
+      "investment": ""
+    }
+  }
+}

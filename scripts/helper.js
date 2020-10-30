@@ -31,7 +31,7 @@ async function writeJson(file, obj) {
         if (err) {
             throw err;
         }
-        console.log("JSON data is saved.");
+        console.log("JSON data is saved in", `${file}.json`);
     });
 }
 
